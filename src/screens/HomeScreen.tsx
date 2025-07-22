@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { View, StyleSheet, Modal } from 'react-native';
+import { View, StyleSheet, Modal, SafeAreaView } from 'react-native';
 import { MapScreen } from '../components/MapScreen';
 import { LocationSelector } from '../components/LocationSelector';
 import { BookingPanel } from '../components/BookingPanel';
+import { ProfileHeader } from '../components/ProfileHeader';
 import { useFeatureFlag } from '../hooks/useFeatureFlag';
 
 interface LocationType {
@@ -68,8 +69,11 @@ export const HomeScreen: React.FC = () => {
   };
 
   return (
-    <View style={styles.container}>
-      <MapScreen onLocationSelect={handleLocationSelect} />
+    <SafeAreaView style={styles.container}>
+      <ProfileHeader />
+      <View style={styles.content}>
+        <MapScreen onLocationSelect={handleLocationSelect} />
+      </View>
       
       <Modal
         visible={showLocationSelector}
@@ -96,12 +100,16 @@ export const HomeScreen: React.FC = () => {
           onConfirm={handleBookingConfirm}
         />
       </Modal>
-    </View>
+    </SafeAreaView>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  content: {
     flex: 1,
   },
 });
